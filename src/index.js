@@ -1,4 +1,4 @@
-import AWS from 'aws-sdk'
+import AWS from 'aws-sdk' 
 import BaseStore from 'ghost-storage-base'
 import { join } from 'path'
 import Promise, { promisify } from 'bluebird'
@@ -15,18 +15,15 @@ class Store extends BaseStore {
     AWS.config.setPromisesDependency(Promise)
 
     const {
-      accessKeyId,
       assetHost,
       bucket,
       pathPrefix,
       region,
-      secretAccessKey,
       endpoint
     } = config
 
     // Compatible with the aws-sdk's default environment variables
-    this.accessKeyId = process.env.AWS_ACCESS_KEY_ID || accessKeyId
-    this.secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY || secretAccessKey
+
     this.region = process.env.AWS_DEFAULT_REGION || region
 
     this.bucket = process.env.GHOST_STORAGE_ADAPTER_S3_PATH_BUCKET || bucket
@@ -67,10 +64,8 @@ class Store extends BaseStore {
 
   s3 () {
     const options = {
-      accessKeyId: this.accessKeyId,
       bucket: this.bucket,
-      region: this.region,
-      secretAccessKey: this.secretAccessKey
+      region: this.region
     }
     if (this.endpoint !== '') {
       options.endpoint = this.endpoint
